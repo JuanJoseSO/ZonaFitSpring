@@ -1,0 +1,37 @@
+1º. Tenemos que ir a Spring Initializr, después de configurar nuestro proyecto maven, añadimos algunas dependencias:
+	-JPA: nos va a permitir establecer la conexión con la base de datos.
+	-MySql JDBC driver.
+	-Lombok: libreria de anotaciones Java para reducir código
+     Generar y descargar.
+2º. Extraer y importar desde Intellij como un proyecto nuevo y importar las dependencias (debería ser automático).
+3º. Empezamos a configurar la configuración de la aplicación desde la ruta scr->main->resources->application.properties
+4º. Descargamos del curso y importamos un logback para darle formato a los mensajes de persistencia reduciendo la información
+    que nos devuelve desde el log.
+
+  *** Principales diferencias debido a la aquitectura Spring ***
+1º. Dividimos las capas lógicas,a través de las anotaciones ORM(Object Relacional Mapping), en:
+    -Entidad(@Entity): Será el mapeo de una clase Java con una tabla de la base de datos.
+    -Datos(@Repository): Interfaz que hará la función de clase Dao del modelo anterior, pero muchos de los métodos los
+                          gestionará string de manera automática.
+                         Indica que la clase es un componente que se encarga de la persistencia.
+                         Las interfaces que extienden de JpaRepository o CrudRepository proporcionan métodos CRUD automáticos,
+                          como save(), findAll(), deleteById(), etc., reduciendo la necesidad de implementar manualmente los métodos
+                          de acceso a datos.
+    -Servicio(@Service): Contendrá las metodos como listar,agregar, pero con funciones añadidas de string como el manejo
+                          transaccional como rollbacks automaticos en caso de error sin afectar a la base de datos.
+                         Es la capa donde implementarás la lógica de negocio. Aquí puedes incluir métodos como listar(),
+                          agregar(), y además aprovechar funcionalidades como el manejo de transacciones con @Transactional,
+                          que proporciona rollback automático en caso de errores.
+    -Presetaciónn(@SpringBootApplication): Es la anotación principal para aplicaciones Spring Boot, que combina @Configuration,
+                                            @EnableAutoConfiguration, y @ComponentScan. Permite que Spring gestione automáticamente
+                                            la creación y el ciclo de vida de los beans (inyección de dependencias).
+
+   Esto aplicará el concepto de injección de dependencias, usaremos los objetos que necesitemos, pero nosotros no los vamos a
+   proporcionar, los va a injectar directamente String según los vayamos requiriendo.
+
+  *** Implementación ***
+1º. Creamos la clase Cliente con todas las anotaciones necesarias.
+2º. Creamos la interfaz ClienteReposirio, extendiendo de JpaRepository indicandole la clase y el tipo de clave primaria.
+     Esto nos da acceso a sus métodos.
+3º. Creamos la interfaz IClienteServicio.
+4º. Implementamos la clase ZonaFitApplication.
