@@ -135,13 +135,9 @@ public class ZonaFitApplication implements CommandLineRunner {
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
             cliente.setMembresia(membresia);
-            /*Intenta insertar el cliente usando el objeto ClienteDao y gestionamos las opciones con el
-            booleano que devuelve la función */
-            if (cliente != null) {
-                clienteServicio.guardarCliente(cliente);
-                logger.info("Se ha agregado el cliente correctamente: {}", cliente);
-            } else logger.info("Error. No se ha agregado el cliente: {}", cliente);
 
+            clienteServicio.guardarCliente(cliente);
+            logger.info("Se ha agregado el cliente correctamente: {}", cliente);
         } catch (NumberFormatException e) {
             logger.info("La membresía debe ser un número entero.{}", e.getMessage());
         }
