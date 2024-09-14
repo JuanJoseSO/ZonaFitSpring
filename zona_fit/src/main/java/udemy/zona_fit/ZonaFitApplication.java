@@ -11,11 +11,12 @@ import udemy.zona_fit.servicio.IClienteServicio;
 
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class ZonaFitApplication implements CommandLineRunner {
+
     /* Injectamos la dependencia de IClienteServicio, basicamente permitimos a esta clase acceder a la clase
-    servicio que nos permite acceder a las clases Repositorio, que nos permiten acceder a las clases de Entity y a
-     su vez a la base de datos. */
+        servicio que nos permite acceder a las clases Repositorio, que nos permiten acceder a las clases de Entity y a
+        su vez a la base de datos. */
     @Autowired
     private IClienteServicio clienteServicio;
 
@@ -98,7 +99,8 @@ public class ZonaFitApplication implements CommandLineRunner {
                     cliente.setNombre(nombre);
                     cliente.setApellido(apellido);
                     cliente.setMembresia(membresia);
-
+            /*Intenta insertar el cliente usando el objeto ClienteDao y gestionamos las opciones con el
+            booleano que devuelve la función */
                     clienteServicio.guardarCliente(cliente);
                     logger.info("Se ha agregado el cliente correctamente: {}", cliente);
 
@@ -109,6 +111,7 @@ public class ZonaFitApplication implements CommandLineRunner {
         } catch (Exception e) {
             logger.info("El ID debe ser un número entero.");
         }
+
     }
 
     private void insertarCliente(Scanner sc) {
@@ -135,6 +138,8 @@ public class ZonaFitApplication implements CommandLineRunner {
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
             cliente.setMembresia(membresia);
+            /*Intenta insertar el cliente usando el objeto ClienteDao y gestionamos las opciones con el
+            booleano que devuelve la función */
 
             clienteServicio.guardarCliente(cliente);
             logger.info("Se ha agregado el cliente correctamente: {}", cliente);
@@ -168,7 +173,6 @@ public class ZonaFitApplication implements CommandLineRunner {
             logger.info("El ID tiene que ser un valor numérico.");
         }
     }
-
 
     private void eliminarCliente(Scanner sc) {
         logger.info("--- Eliminar Cliente ---");
