@@ -36,3 +36,10 @@
 3º. Creamos la interfaz IClienteServicio.
 4º. Implementamos la clase ZonaFitApplication. -> Requerimos el plugin de lombok para acceder a los métodos de la clase
      como getters/setters.
+
+     ***************************** VERSIÓN 2 -- JAVA SWING **********************************************************
+1º. Creamos la GUI en su paquete.
+2º. Desde el paquete raíz creamos la clase ZonaFitSwing,ya que si lo depositamos en otra ruta podremos tener conflictos al no reconocer
+     Sping.
+ ** Comentar la anotación @SpringBootApplication de ZonaFitApplication para desconectarlo de la aplicación de Spring.
+

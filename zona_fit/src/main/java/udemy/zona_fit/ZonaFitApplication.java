@@ -11,7 +11,7 @@ import udemy.zona_fit.servicio.IClienteServicio;
 
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class ZonaFitApplication implements CommandLineRunner {
     /* Injectamos la dependencia de IClienteServicio, basicamente permitimos a esta clase acceder a la clase
     servicio que nos permite acceder a las clases Repositorio, que nos permiten acceder a las clases de Entity y a
