@@ -42,4 +42,13 @@
 2º. Desde el paquete raíz creamos la clase ZonaFitSwing,ya que si lo depositamos en otra ruta podremos tener conflictos al no reconocer
      Sping.
  ** Comentar la anotación @SpringBootApplication de ZonaFitApplication para desconectarlo de la aplicación de Spring.
+3º. Configuramos la clase ZonaFitForm con todos los listener y métodos necesarios.
+
+      ***************************** VERSIÓN 3 -- WEB **********************************************************
+1º. Agregamos cosas al pom, librerias y versiones nuevas.
+2º. Modificamos application.properties.
+3º. Creamos la clase ZonaFitWeb, con la anotación @Springboot y su método springapplication.run(nombreclase.class,arg).
+4º. Creamos el directorio en resources con nombre META-INF, obligatorio,  y dentro de esta resources y un nuevo archivo File con
+     extensión .xhtml por qué será dinámico.
+5º. Creamos el paquete controlador con la clase IndexControlador y la anotación @Component y @Data(getter/setter automáticos).
 

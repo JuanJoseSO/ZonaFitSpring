@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 
 
 //Tenemos que agregar esta anotación para que Spring pueda gestionar esta clase como un bean.
-@Component
+//@Component
 public class ZonaFitForm extends JFrame {
     private JPanel panelPrincipal;
     private JTable clientesTabla;     // Tabla para mostrar los datos de los clientes.

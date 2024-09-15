@@ -9,7 +9,7 @@ import udemy.zona_fit.gui.ZonaFitForm;
 
 import javax.swing.*;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class ZonaFitSwing {
     public static void main(String[] args) {
         //Iniciamos el modo oscuro, esto debe hacerse antes de cargar cualquier componente de la interfaz gráfica.

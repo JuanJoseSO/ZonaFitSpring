@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<h:html xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <!-- Define la sección del encabezado HTML.-->
+    <h:head>
+        <title>Zona Fit (GYM)</title>
+
+        <ui:remove><!--Referencia a primeflex.css, que es un framework CSS de PrimeFaces para gestionar estilos y layouts. Ayudará a aplicar estilos de forma más sencilla.--></ui:remove>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    </h:head>
+    <h:body>
+        <div class="card">
+            <ui:remove> <!--Esta etiqueta envuelve tdo lo que pertenece al formulario de clientes. forma-clientes es un id único con el que lo referenciaremos desde otros componentes--></ui:remove>
+            <h:form id="forma-clientes">
+
+                <ui:remove> <!--Componente de PrimeFaces que muestra notificaciones de tipo "growl" en la pantalla. Se utiliza para mostrar mensajes que aparecen y desaparecen (como alertas de éxito o error).--></ui:remove>
+                <p:growl id="mensajes" showDetails="true"/>
+                <!--  Menubar  -->
+                <div class="card">
+                    <!--Este componente crea un menú horizontal.-->
+                    <p:menubar>
+
+                        <ui:remove> <!--<p:menuitem> -> Este es un elemento del menú que tiene la opción de "Inicio"-->
+                            <!--update=":forma-clientes:clientes-tabla" -> Cuando se hace clic en "Inicio", se actualizará una tabla de clientes (indicada por clientes-tabla)-->
+                            <!--actionListener="#{indexControlador.cargarDatos}" -> Llama al metodo cargarDatos del controlador indexControlador para cargar los datos de los clientes cuando el usuario hace clic. -->   </ui:remove>
+                        <p:menuitem value="Inicio"
+                                    icon="pi pi-fw pi-user"
+                                    update=":forma-clientes:clientes-tabla"
+                                    actionListener="#{indexControlador.cargarDatos}"/>
+
+                        <ui:remove> <!--actionListener="#{indexControlador.agregarCliente}" -> Este metodo en el controlador se llama cuando el usuario hace clic en "Nuevo Cliente", para inicializar el proceso de agregar un nuevo cliente.-->
+                            <!--update=":forma-modal:cliente-ventana" -> Indica que se actualizará un formulario modal llamado cliente-ventana-->
+                            <!--oncomplete="PF('ventanaModalCliente').show()" -> Después de ejecutar la acción, se mostrará una ventana emergente (modal) que permitirá al usuario ingresar los detalles del nuevo cliente.-->  </ui:remove>
+                        <p:menuitem value="Nuevo Cliente"
+                                    icon="pi pi-fw pi-plus"
+                                    actionListener="#{indexControlador.agregarCliente}"
+                                    update=":forma-modal:cliente-ventana"
+                                    oncomplete="PF('ventanaModalCliente').show()"/>
+                    </p:menubar>
+                </div>
+                <!-- DataTable  -->
+                <div class="card">
+
+                    <ui:remove> <!-- <p:dataTable> -> Este componente renderiza una tabla dinámica en PrimeFaces -->
+                        <!-- value="#{indexControlador.clientes}" -> El atributo value está vinculado a la lista de clientes que se encuentra en indexControlador. Cada fila en la tabla representará un cliente -->
+                        <!-- var="cliente" -> Define una variable cliente que se usará en cada fila para mostrar los datos de ese cliente -->
+                        <!-- id="clientes-tabla" -> ID único de la tabla, usado para referenciarla en otras partes del código. -->
+                        <!-- widgetVar="clientesTabla" -> Define una variable de JavaScript para la tabla que te permitirá interactuar con ella mediante scripts de PrimeFaces-->      </ui:remove>
+                    <p:dataTable value="#{indexControlador.clientes}" var="cliente" id="clientes-tabla"
+                                 widgetVar="clientesTabla">
+
+                        <ui:remove>
+                            <!-- <f:facet>: Definimos una parte específica de la tabla, en este caso el encabezado.-->
+                            <!-- Dentro de la etiqueta facet, usamos un diseño con CSS (utilizando PrimeFlex) para mostrar un encabezado que diga "Zona Fit (GYM)"--></ui:remove>
+                        <f:facet name="header">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
+                                    <h3>Zona Fit (GYM)</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+
+
+                        <ui:remove> <!-- <p:column> -> representa una columna de la tabla. Las filas de la tabla se llenarán con los datos de cada cliente.-->
+                            <!-- headerText="Id" -> Texto que aparece en el encabezado de la columna (en este caso, "Id").-->        </ui:remove>
+                        <p:column headerText="Id">
+
+                            <ui:remove><!--<h:outputText> -> Aquí se muestra el valor de un campo específico de la instancia de cliente-->        </ui:remove>
+                            <h:outputText value="#{cliente.idCliente}"/>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cliente.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Apellido">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+                        <p:column headerText="Membresía">
+                            <h:outputText value="#{cliente.membresia}"/>
+                        </p:column>
+                        <p:column>
+
+                            <ui:remove> <!-- <p:commandButton> -> Este botón permite editar la información del cliente seleccionado. Se encuentra dentro de las columnas-->
+                                        <!-- value="Editar" -> Texto del botón.-->
+                                        <!-- update=":forma-modal:cliente-ventana" -> El atributo update se usa en componentes de PrimeFaces (por ejemplo, en los botones) para especificar qué parte de la página debe ser actualizada tras realizar una acción -->
+                                        <!--:forma-modal:cliente-ventana: Esto indica que se debe actualizar el componente con el id="cliente-ventana", que está dentro del formulario con id="forma-modal".-->
+                                        <!-- oncomplete="PF('ventanaModalCliente').show()" -> Al hacer clic, abre el formulario modal para editar el cliente--></ui:remove>
+                            <p:commandButton value="Editar"
+                                             icon="pi pi-pencil"
+                                             update=":forma-modal:cliente-ventana"
+                                             process="@this"
+                                             oncomplete="PF('ventanaModalCliente').show()"
+                                             class="ui-button-primary"
+                                             style="margin-right: .5rem">
+
+                                <ui:remove> <!-- <f:setPropertyActionListener> -> Este componente asigna el cliente seleccionado (de la fila de la tabla) al objeto clienteSeleccionado del controlador.-->
+                                            <!-- Aquí asigna el valor de cliente, que es una de las filas de la tabla, a la variable clienteSeleccionado, así conseguimos que se muestren los parametros concretos de ese cliente al editarlo--> </ui:remove>
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexControlador.clienteSeleccionado}"/>
+
+                                <ui:remove> <!-- <p:resetInput>: Limpia el formulario para asegurarse de que no queden datos anteriores.--></ui:remove>
+                                <p:resetInput target=":forma-modal:cliente-ventana"/>
+                            </p:commandButton>
+                            <p:commandButton value="Eliminar"
+                                             icon="pi pi-trash"
+                                             process="@this"
+                                             oncomplete="PF('eliminarClienteVentana').show()"
+                                             class="ui-button-danger"
+                                             style="margin-right: .5rem">
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexControlador.clienteSeleccionado}"/>
+                                <p:resetInput target=":forma-modal:cliente-ventana"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+
+            <ui:remove><!-- <h:form id="forma-modal"> -> Segundo formulario independiente que está dedicado al manejo del la ventana emergente--></ui:remove>
+            <h:form id="forma-modal">
+
+                <ui:remove> <!-- <p:dialog> -> Este componente es un diálogo modal que aparece como una ventana emergente. Se usa aquí para mostrar y editar los detalles de un cliente seleccionado.-->
+                            <!-- header="Detalles Cliente" -> El encabezado de la ventana modal es "Detalles Cliente"-->
+                            <!-- showEffect="fade" -> La ventana aparecerá con un efecto de "fade" (desvanecimiento)-->
+                            <!-- modal="true" -> Esto asegura que la ventana modal sea modal, es decir, que el resto de la página no se pueda interactuar mientras esté abierta-->
+                            <!-- widgetVar="ventanaModalCliente": Esta variable de PrimeFaces permitirá interactuar con la ventana modal desde JavaScript. Por ejemplo, puedes abrirla o cerrarla con PF('ventanaModalCliente').show() o PF('ventanaModalCliente').hide()--></ui:remove>
+                <p:dialog header="Detalles Cliente"
+                          showEffect="fade"
+                          modal="true"
+                          widgetVar="ventanaModalCliente"
+                          responsive="true">
+
+                    <ui:remove> <!-- <p:outputPanel> -> Agrupa otros componentes. Su principal función es organizar y encapsular contenido dentro de un área específica.-->
+                                <!-- id="cliente-ventana": Identificador del panel. Esto permite actualizar el panel cuando se edita la información.-->
+                                <!-- class="ui-fluid": Esta clase garantiza que el contenido dentro del panel sea fluido y se ajuste al tamaño de la ventana--></ui:remove>
+                    <p:outputPanel id="cliente-ventana" class="ui-fluid">
+
+                        <ui:remove><!-- Cada uno de estos bloques define un campo que el usuario puede editar dentro del formulario modal--></ui:remove>
+                        <div class="field">
+                            <ui:remove><!-- <p:outputLabel for="nombre">: Esto muestra una etiqueta para el campo "Nombre"--></ui:remove>
+                            <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                            <ui:remove> <!-- <p:inputText id="nombre"-> Aquí tenemos el campo de texto donde se puede editar el nombre del cliente seleccionado. -->
+                                <!-- value="#{indexControlador.clienteSeleccionado.nombre}" -> Cada uno de estos campos está vinculado a la propiedad clienteSeleccionado en el controlador indexControlador. Cuando el usuario edita los campos, los valores se almacenan en este objeto. -->
+                                <!-- required="true" -> indica que este campo es obligatorio.--> </ui:remove>
+                            <p:inputText id="nombre"
+                                         value="#{indexControlador.clienteSeleccionado.nombre}"
+                                         required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
+                            <p:inputText id="apellido"
+                                         value="#{indexControlador.clienteSeleccionado.apellido}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="membresia">Membresía</p:outputLabel>
+                            <p:inputText id="membresia"
+                                         value="#{indexControlador.clienteSeleccionado.membresia}"
+                                         required="true"/>
+                        </div>
+
+                    </p:outputPanel>
+
+                    <ui:remove><!-- <f:facet name="footer"> -> representa un area de la ventana emergente, la parte inferior en  este caso --></ui:remove>
+                    <f:facet name="footer">
+
+                        <ui:remove> <!-- value="Guardar": El texto que aparecerá en el botón es "Guardar".-->
+                            <!-- process="cliente-ventana @this": El atributo process indica qué componentes se enviarán al servidor cuando el botón sea presionado. En este caso, enviará los datos del panel cliente-ventana y el mismo botón (@this).-->
+                            <!-- actionListener="#{indexControlador.guardarCliente}": Este es el metodo en el controlador que se ejecuta cuando el usuario hace clic en el botón "Guardar". Se encargará de guardar los datos del cliente.--></ui:remove>
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                         process="cliente-ventana @this"
+                                         actionListener="#{indexControlador.guardarCliente}"/>
+                        <ui:remove><!-- type="button" -> Es importante especificarlo por qué al ser un botón de tipo button, no envía datos al servidor.--></ui:remove>
+                        <p:commandButton value="Cancelar" icon="pi pi-times"
+                                         onclick="PF('ventanaModalCliente').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+                <ui:remove> <!--  <p:confirmDialog> ->Este componente muestra un cuadro de diálogo que pide confirmación antes de eliminar un cliente-->
+                    <!-- widgetVar="eliminarClienteVentana" -> Este nombre te permite controlar el diálogo desde JavaScript (para abrirlo o cerrarlo).-->
+                    <!-- message="Eliminar el cliente:" -> Este es el mensaje que se mostrará dentro del cuadro de confirmación.-->
+                    <!-- severity="warn": Esto establece la gravedad como "warn", que cambia el estilo visual del cuadro para indicar advertencia o peligro.--></ui:remove>
+                <p:confirmDialog widgetVar="eliminarClienteVentana"
+                                 showEffect="fade"
+                                 width="300"
+                                 message="Eliminar el cliente:"
+                                 header="Confirmar"
+                                 severity="warn">
+                    <ui:remove> <!-- actionListener="#{indexControlador.eliminarCliente}": Llama al metodo eliminarCliente en el controlador para proceder con la eliminación.-->
+                        <!-- process="@this" -> Solo este botón se enviará al servidor cuando se haga clic -->
+                        <!-- oncomplete="PF('eliminarClienteVentana').hide()" -> Después de confirmar la eliminación, el cuadro de diálogo se cerrará.--></ui:remove>
+                    <p:commandButton value="Si" icon="pi pi-check"
+                                     actionListener="#{indexControlador.eliminarCliente}"
+                                     process="@this"
+                                     oncomplete="PF('eliminarClienteVentana').hide()"/>
+                    <p:commandButton value="No"
+                                     type="button"
+                                     styleClass="ui-button-secondary"
+                                     icon="pi pi-times"
+                                     oncomplete="PF('eliminarClienteVentana').hide()"/>
+                </p:confirmDialog>
+            </h:form>
+        </div>
+    </h:body>
+</h:html>
